@@ -1,5 +1,6 @@
 package com.vanderkruk.localtourguide.userinterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -82,17 +83,14 @@ public class WelcomeStartScreen extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_manage) {
+            MapTourScreen
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+            vjp = new MapTourScreen();
+            Intent intent = new Intent(WelcomeStartScreen.this, MapTourScreen.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
