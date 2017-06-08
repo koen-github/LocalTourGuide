@@ -18,7 +18,7 @@
         />
 
     <EditText
-        android:id="@+id/title"
+        android:id="@+id/tourTitleId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
@@ -38,7 +38,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/city"
+        android:id="@+id/tourCityId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
@@ -57,7 +57,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/author"
+        android:id="@+id/tourAuthorId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
@@ -75,13 +75,14 @@
         android:layout_row="3"
         android:text="Add Waypoint" />
     <Button
-        android:id="@+id/saveTour"
+        android:id="@+id/saveTourButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="1"
         android:paddingLeft="70sp"
         android:paddingRight="70sp"
         android:layout_row="5"
+        android:onClick="saveTour"
         android:text="Save Tour" />
 
 </GridLayout>

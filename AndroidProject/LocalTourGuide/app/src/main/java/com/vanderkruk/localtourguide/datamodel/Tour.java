@@ -1,5 +1,8 @@
 package com.vanderkruk.localtourguide.datamodel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 /**
  * Created by koen on 8-5-2017.
  */
@@ -10,8 +13,14 @@ public class Tour {
     private String city;
     private String user;
     private String name;
+    private int id;
+
+    private Context ct;
 
 
+    public Tour(Context c){
+        ct = c;
+    }
     public String getName() {
         return name;
     }
@@ -42,6 +51,20 @@ public class Tour {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public void storeCurrentTour(){
+        SharedPreferences settings = ct.getSharedPreferences("TOUR_INFORMATION_"+, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("name",name);
+        editor.putInt("rating",rating);
+        editor.putString("city",city);
+        editor.putString("user",user);
+
+        // Commit the edits!
+        editor.commit();
+
+
     }
 
 
