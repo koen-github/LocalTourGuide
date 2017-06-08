@@ -84,9 +84,7 @@ public class WelcomeStartScreen extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_manage) {
-            MapTourScreen
-
-            vjp = new MapTourScreen();
+            MapTourScreen vjp = new MapTourScreen();
             Intent intent = new Intent(WelcomeStartScreen.this, MapTourScreen.class);
             startActivity(intent);
 
