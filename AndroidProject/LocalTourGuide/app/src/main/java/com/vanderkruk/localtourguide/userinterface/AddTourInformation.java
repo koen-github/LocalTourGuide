@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -15,6 +17,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.vanderkruk.localtourguide.R;
 import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
+import com.vanderkruk.localtourguide.database.WayPointDatabaseHelper;
 import com.vanderkruk.localtourguide.datamodel.Tour;
 import com.vanderkruk.localtourguide.datamodel.WayPoint;
 
@@ -27,6 +30,10 @@ public class AddTourInformation extends AppCompatActivity{
     private EditText inputTitle;
     private EditText inputAuthor;
     private EditText inputCity;
+    private ListView allWaypoints;
+
+    private ArrayAdapter<String> listAdapter ;
+
     int PLACE_PICKER_REQUEST = 1;
     Tour currentTour;
 
@@ -39,32 +46,26 @@ public class AddTourInformation extends AppCompatActivity{
         inputAuthor = (EditText) findViewById(R.id.tourAuthorId);
         inputCity = (EditText) findViewById(R.id.tourCityId);
         currentTour = new Tour(this);
+        allWaypoints = (ListView) findViewById(R.id.allWaypoints);
+
     }
 
     public void addWaypoint(View v){
-
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        try {
-            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
+        Intent intent = new Intent(AddTourInformation.this, AddWaypointInformation.class);
+        //todo: give object by looper and message system.
+        startActivity(intent);
+        //todo
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_PICKER_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                WayPoint wp = new WayPoint(place.getLatLng());
-                currentTour.addWaypoint(wp);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-            }
-        }
+    @Override
+    public void onResume(){
+        // Create ArrayAdapter using the planet list.
+        listAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_view_row, currentTour.getAllWaypointsAsString());
+        // Set the ArrayAdapter as the ListView's adapter.
+        allWaypoints.setAdapter( listAdapter );
+        super.onResume();
     }
+
 
     public void saveTour(View v){
         String title = inputTitle.getText().toString();
@@ -77,6 +78,13 @@ public class AddTourInformation extends AppCompatActivity{
         currentTour.setRating(5);
         TourDatabaseHelper tdh = new TourDatabaseHelper(this);
         tdh.addTourToDatabase(currentTour);
+
+        WayPointDatabaseHelper wph = new WayPointDatabaseHelper(this);
+
+        for(WayPoint wp: currentTour.getAllWaypoints()){
+            wph.addWaypointToDatabase(wp);
+        }
+
         Log.d("AddTourInformation", "Saving Tour...");
     }
 

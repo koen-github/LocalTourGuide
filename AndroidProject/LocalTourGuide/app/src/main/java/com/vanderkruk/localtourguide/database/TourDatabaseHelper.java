@@ -15,11 +15,13 @@ public class TourDatabaseHelper extends DatabaseWriter {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE TourInformation (" +
-                    "id INTEGER PRIMARY KEY," +
+                    "id INTEGER," +
                     "Name TEXT," +
                     "Rating INTEGER," +
                     "User VARCHAR(300)," +
                     "City VARCHAR(300))";
+
+
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS TourInformation";
 
@@ -41,6 +43,7 @@ public class TourDatabaseHelper extends DatabaseWriter {
         values.put("Rating", t.getRating());
         values.put("Name", t.getName());
         values.put("User", t.getUser());
+        values.put("id", t.getId());
 
         insertInformationToDatabase("TourInformation", values);
     }

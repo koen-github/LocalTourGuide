@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 
 import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by koen on 8-5-2017.
@@ -25,6 +27,10 @@ public class Tour {
 
     public Tour(Context c){
         ct = c;
+        Random rand = new Random();
+        int value = rand.nextInt(3000);
+        id = value;
+        allWaypoints = new ArrayList<WayPoint>();
     }
     public String getName() {
         return name;
@@ -68,5 +74,17 @@ public class Tour {
 
     public List<WayPoint> getAllWaypoints(){
         return allWaypoints;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public List<String> getAllWaypointsAsString(){
+        List<String> stringsList = new ArrayList<String>(allWaypoints.size());
+        for (WayPoint wp : allWaypoints) {
+            stringsList.add(wp.toString());
+        }
+        return stringsList;
     }
 }

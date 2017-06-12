@@ -35,6 +35,5 @@ public class DatabaseWriter {
             dbh.runSQLQuery(SQL_CREATE);
             dbh.getWritableDatabase().insertOrThrow(tableName, null, cv);
         }
-        dbh.getWritableDatabase().close();
     }
 }
