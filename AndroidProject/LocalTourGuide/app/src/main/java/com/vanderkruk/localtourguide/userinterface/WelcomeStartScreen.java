@@ -30,8 +30,8 @@ public class WelcomeStartScreen extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(WelcomeStartScreen.this, AddTourInformation.class);
+                startActivity(intent);
             }
         });
 
@@ -84,7 +84,7 @@ public class WelcomeStartScreen extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_manage) {
-            MapTourScreen vjp = new MapTourScreen();
+          //  MapTourScreen vjp = new MapTourScreen();
             Intent intent = new Intent(WelcomeStartScreen.this, MapTourScreen.class);
             startActivity(intent);
 

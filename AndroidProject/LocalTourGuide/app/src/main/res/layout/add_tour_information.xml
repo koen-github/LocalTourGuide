@@ -73,7 +73,8 @@
         android:paddingLeft="60sp"
         android:paddingRight="60sp"
         android:layout_row="3"
-        android:text="Add Waypoint" />
+        android:text="Add Waypoint"
+        android:onClick="addWaypoint"/>
     <Button
         android:id="@+id/saveTourButton"
         android:layout_width="wrap_content"

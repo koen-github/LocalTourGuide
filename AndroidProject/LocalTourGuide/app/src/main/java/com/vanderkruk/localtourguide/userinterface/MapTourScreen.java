@@ -38,9 +38,11 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_tour_screen);
         markerActions = new MarkerActions();
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //make available zoom controls
+
     }
 
     /**
@@ -52,5 +54,6 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("TestMarker"));
         map.setOnMarkerClickListener(markerActions);
+
     }
 }

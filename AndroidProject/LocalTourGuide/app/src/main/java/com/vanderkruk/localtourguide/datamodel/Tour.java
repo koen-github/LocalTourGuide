@@ -3,6 +3,10 @@ package com.vanderkruk.localtourguide.datamodel;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
+
+import java.util.List;
+
 /**
  * Created by koen on 8-5-2017.
  */
@@ -13,6 +17,7 @@ public class Tour {
     private String city;
     private String user;
     private String name;
+    private List<WayPoint> allWaypoints;
     private int id;
 
     private Context ct;
@@ -53,19 +58,15 @@ public class Tour {
         this.user = user;
     }
 
-    public void storeCurrentTour(){
-        SharedPreferences settings = ct.getSharedPreferences("TOUR_INFORMATION_"+, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("name",name);
-        editor.putInt("rating",rating);
-        editor.putString("city",city);
-        editor.putString("user",user);
-
-        // Commit the edits!
-        editor.commit();
-
-
+    public void addWaypoint(WayPoint theWaypoint){
+        allWaypoints.add(theWaypoint);
     }
 
+    public void removeWaypoint(WayPoint theWaypoint){
+        allWaypoints.remove(theWaypoint);
+    }
 
+    public List<WayPoint> getAllWaypoints(){
+        return allWaypoints;
+    }
 }

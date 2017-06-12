@@ -12,5 +12,11 @@ public class WayPoint {
     private LatLng waypointMarker;
     private List<Media> mediaComponents;
 
+    public WayPoint(LatLng wp){
+        waypointMarker = wp;
+    }
 
+    public void addMedia(Media component){
+        mediaComponents.add(component);
+    }
 }
