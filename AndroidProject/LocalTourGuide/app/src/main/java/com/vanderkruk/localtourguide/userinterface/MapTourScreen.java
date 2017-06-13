@@ -21,8 +21,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.vanderkruk.localtourguide.R;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -52,8 +57,13 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
      */
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("TestMarker"));
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Eerste"));
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 5)).title("Tweede"));
+        map.addMarker(new MarkerOptions().position(new LatLng(3, 5)).title("Derde"));
         map.setOnMarkerClickListener(markerActions);
+       Polyline polygon = map.addPolyline(new PolylineOptions().geodesic(true)
+                .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5)));
+
 
     }
 }

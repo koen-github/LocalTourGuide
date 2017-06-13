@@ -45,8 +45,8 @@ public class AddWaypointInformation extends AppCompatActivity {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                WayPoint wp = new WayPoint(place.getLatLng(), place.getName().toString(), currentTour.getId());
-                currentTour.addWaypoint(wp);
+             //   WayPoint wp = new WayPoint(place.getLatLng(), place.getName().toString(), currentTour.getId());
+             //   currentTour.addWaypoint(wp);
 
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
