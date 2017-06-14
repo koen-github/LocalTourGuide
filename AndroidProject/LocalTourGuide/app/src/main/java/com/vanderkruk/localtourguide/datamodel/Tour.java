@@ -80,6 +80,10 @@ public class Tour {
         return id;
     }
 
+    public void setId(int ifo){
+        id = ifo;
+    }
+
     public List<String> getAllWaypointsAsString(){
         List<String> stringsList = new ArrayList<String>(allWaypoints.size());
         for (WayPoint wp : allWaypoints) {

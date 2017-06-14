@@ -2,6 +2,7 @@ package com.vanderkruk.localtourguide.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -38,6 +39,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             Log.e("DatabaseHelper", "Database is still zero: " + query);
         }
+    }
+
+    public Cursor getQuery(String selectQuery){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor;
     }
 
 

@@ -2,10 +2,14 @@ package com.vanderkruk.localtourguide.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.vanderkruk.localtourguide.datamodel.Tour;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by koen on 8-6-2017.
@@ -32,6 +36,30 @@ public class TourDatabaseHelper extends DatabaseWriter {
 
     public void removeTourWithID(int id){
         writeInformationToDatbase("delete from TourInformation where id='"+id+"'");
+    }
+
+    public List<Tour> getAllTours(){
+        List<Tour> allTours = new ArrayList<Tour>();
+
+
+        Cursor cursor = dbh.getQuery("SELECT  * FROM TourInformation");
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Tour tourObject = new Tour(currentContext);
+                tourObject.setId(cursor.getInt(0));
+                tourObject.setName(cursor.getString(1));
+                tourObject.setRating(cursor.getInt(2));
+                tourObject.setCity(cursor.getString(3));
+                tourObject.setUser(cursor.getString(4));
+
+                allTours.add(tourObject);
+
+            } while (cursor.moveToNext());
+        }
+        return allTours;
+
     }
 
 

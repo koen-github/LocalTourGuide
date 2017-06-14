@@ -12,11 +12,12 @@ public class DatabaseWriter {
     protected DatabaseHelper dbh;
     private String SQL_CREATE;
     private String SQL_DELETE;
+    protected Context currentContext;
 
     public DatabaseWriter(Context c, String cr, String d){
         dbh = DatabaseHelper.getInstance(c);
         SQL_CREATE = cr;
-
+        currentContext = c;
 
         SQL_DELETE = d;
     }
