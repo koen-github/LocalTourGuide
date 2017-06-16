@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,7 @@ import java.util.Random;
  * Created by koen on 8-5-2017.
  */
 
-public class Tour {
+public class Tour implements Serializable {
 
     private int rating;
     private String city;
@@ -22,16 +23,13 @@ public class Tour {
     private List<WayPoint> allWaypoints;
     private int id;
 
-    private Context ct;
-
-
-    public Tour(Context c){
-        ct = c;
+    public Tour(){
         Random rand = new Random();
         int value = rand.nextInt(3000);
         id = value;
         allWaypoints = new ArrayList<WayPoint>();
     }
+
     public String getName() {
         return name;
     }
@@ -70,6 +68,10 @@ public class Tour {
 
     public void removeWaypoint(WayPoint theWaypoint){
         allWaypoints.remove(theWaypoint);
+    }
+
+    public void addAllWaypoints(List<WayPoint> theWaypoints){
+        allWaypoints = theWaypoints;
     }
 
     public List<WayPoint> getAllWaypoints(){

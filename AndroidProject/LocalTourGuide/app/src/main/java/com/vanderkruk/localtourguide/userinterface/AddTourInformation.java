@@ -35,6 +35,7 @@ public class AddTourInformation extends AppCompatActivity{
     private ArrayAdapter<String> listAdapter ;
 
     int PLACE_PICKER_REQUEST = 1;
+    int ADD_WAYPOINT_REQUEST = 2;
     Tour currentTour;
 
     @Override
@@ -45,15 +46,16 @@ public class AddTourInformation extends AppCompatActivity{
         inputTitle = (EditText) findViewById(R.id.tourTitleId);
         inputAuthor = (EditText) findViewById(R.id.tourAuthorId);
         inputCity = (EditText) findViewById(R.id.tourCityId);
-        currentTour = new Tour(this);
+        currentTour = new Tour();
         allWaypoints = (ListView) findViewById(R.id.allWaypoints);
 
     }
 
     public void addWaypoint(View v){
         Intent intent = new Intent(AddTourInformation.this, AddWaypointInformation.class);
+        intent.putExtra("currentTour",currentTour);
         //todo: give object by looper and message system.
-        startActivity(intent);
+        startActivityForResult(intent, ADD_WAYPOINT_REQUEST);
         //todo
     }
 
@@ -66,6 +68,18 @@ public class AddTourInformation extends AppCompatActivity{
         super.onResume();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == ADD_WAYPOINT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                currentTour = (Tour)data.getSerializableExtra("currentTour");
+                Log.d("Tour", "TOUR INFO IS SET");
+            }
+        }
+    }
+
 
     public void saveTour(View v){
         String title = inputTitle.getText().toString();
@@ -76,6 +90,7 @@ public class AddTourInformation extends AppCompatActivity{
         currentTour.setUser(author);
         currentTour.setCity(city);
         currentTour.setRating(5);
+
         TourDatabaseHelper tdh = new TourDatabaseHelper(this);
         tdh.addTourToDatabase(currentTour);
 

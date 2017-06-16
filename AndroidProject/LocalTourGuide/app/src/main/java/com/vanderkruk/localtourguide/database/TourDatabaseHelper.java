@@ -42,17 +42,18 @@ public class TourDatabaseHelper extends DatabaseWriter {
         List<Tour> allTours = new ArrayList<Tour>();
 
 
-        Cursor cursor = dbh.getQuery("SELECT  * FROM TourInformation");
+        Cursor cursor = dbh.getQuery("SELECT * FROM TourInformation");
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Tour tourObject = new Tour(currentContext);
-                tourObject.setId(cursor.getInt(0));
-                tourObject.setName(cursor.getString(1));
-                tourObject.setRating(cursor.getInt(2));
-                tourObject.setCity(cursor.getString(3));
-                tourObject.setUser(cursor.getString(4));
+                Tour tourObject = new Tour();
+
+                tourObject.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                tourObject.setName(cursor.getString(cursor.getColumnIndex("Name")));
+                tourObject.setRating(cursor.getInt(cursor.getColumnIndex("Rating")));
+                tourObject.setCity(cursor.getString(cursor.getColumnIndex("City")));
+                tourObject.setUser(cursor.getString(cursor.getColumnIndex("User")));
 
                 allTours.add(tourObject);
 

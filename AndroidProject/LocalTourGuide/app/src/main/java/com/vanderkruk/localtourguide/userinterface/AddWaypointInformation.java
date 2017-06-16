@@ -3,6 +3,7 @@ package com.vanderkruk.localtourguide.userinterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ public class AddWaypointInformation extends AppCompatActivity {
 
     int PLACE_PICKER_REQUEST = 1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +41,18 @@ public class AddWaypointInformation extends AppCompatActivity {
 
         waypointOrder = (EditText) findViewById(R.id.waypointOrder);
         currentText = (EditText) findViewById(R.id.textInformation);
-
+        currentTour = (Tour)getIntent().getSerializableExtra("currentTour");
     }
+
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-             //   WayPoint wp = new WayPoint(place.getLatLng(), place.getName().toString(), currentTour.getId());
-             //   currentTour.addWaypoint(wp);
-
+                WayPoint wp = new WayPoint(place.getLatLng().latitude, place.getLatLng().longitude,place.getName().toString(), currentTour.getId(), Integer.parseInt(waypointOrder.getText().toString()));
+                currentTour.addWaypoint(wp);
+                Log.d("Tourie", Integer.toString(currentTour.getId()));
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
@@ -67,7 +72,11 @@ public class AddWaypointInformation extends AppCompatActivity {
     }
 
     public void onSaveWaypoint(View v){
+        Intent intent = this.getIntent();
+        intent.putExtra("currentTour", currentTour);
+        this.setResult(RESULT_OK, intent);
 
+        finish();
     }
 
 }

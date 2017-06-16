@@ -1,20 +1,6 @@
 package com.vanderkruk.localtourguide.userinterface;
 
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,17 +12,23 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.vanderkruk.localtourguide.R;
+import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
+import com.vanderkruk.localtourguide.database.WayPointDatabaseHelper;
+import com.vanderkruk.localtourguide.datamodel.Tour;
+import com.vanderkruk.localtourguide.datamodel.WayPoint;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-/**
- * This shows how to create a simple activity with a map and a marker on the map.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     private MarkerActions markerActions;
+    private Tour currentTour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +37,22 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
         markerActions = new MarkerActions();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        //make available zoom controls
+        currentTour = (Tour)getIntent().getSerializableExtra("currentTour");
 
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we
-     * just add a marker near Africa.
-     */
+
     @Override
     public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Eerste"));
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 5)).title("Tweede"));
-        map.addMarker(new MarkerOptions().position(new LatLng(3, 5)).title("Derde"));
+        PolylineOptions polyoptions = new PolylineOptions().geodesic(true);
+
+        for(WayPoint wap : currentTour.getAllWaypoints()){
+            LatLng currentlatlng = new LatLng(wap.getLat(), wap.getLng());
+            map.addMarker(new MarkerOptions().position(currentlatlng).title(wap.getName()));
+            polyoptions.add(currentlatlng);
+        }
         map.setOnMarkerClickListener(markerActions);
-       Polyline polygon = map.addPolyline(new PolylineOptions().geodesic(true)
-                .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5)));
+        Polyline polygon = map.addPolyline(polyoptions);
 
 
     }
