@@ -2,6 +2,7 @@ package com.vanderkruk.localtourguide.userinterface;
 
 
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -48,9 +49,12 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
 
         for(WayPoint wap : currentTour.getAllWaypoints()){
             LatLng currentlatlng = new LatLng(wap.getLat(), wap.getLng());
-            map.addMarker(new MarkerOptions().position(currentlatlng).title(wap.getName()));
+            map.addMarker(new MarkerOptions().position(currentlatlng).title(Integer.toString(wap.getWaypointOrder())));
             polyoptions.add(currentlatlng);
         }
+        map.setMinZoomPreference(11);
+        WayPoint zoomWaypoint = currentTour.getAllWaypoints().get(0);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(zoomWaypoint.getLat(), zoomWaypoint.getLng()), 10));
         map.setOnMarkerClickListener(markerActions);
         Polyline polygon = map.addPolyline(polyoptions);
 
