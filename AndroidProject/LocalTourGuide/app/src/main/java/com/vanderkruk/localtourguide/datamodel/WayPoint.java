@@ -1,9 +1,10 @@
 package com.vanderkruk.localtourguide.datamodel;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.vanderkruk.localtourguide.datamodel.media.Media;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by koen on 8-5-2017.
@@ -16,6 +17,7 @@ public class WayPoint implements Serializable{
     private String name;
     private int Tour_ID;
     private int waypointOrder;
+    private int id;
 
     public WayPoint(double LAT, double LNG, String nam, int tour_id, int waypoint_order){
         Lat = LAT;
@@ -23,6 +25,8 @@ public class WayPoint implements Serializable{
         name = nam;
         Tour_ID = tour_id;
         waypointOrder = waypoint_order;
+        Random rand = new Random();
+        int id = rand.nextInt(300000);
     }
 
     public void addMedia(Media component){
@@ -52,5 +56,13 @@ public class WayPoint implements Serializable{
 
     public int getTour_ID(){
         return Tour_ID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

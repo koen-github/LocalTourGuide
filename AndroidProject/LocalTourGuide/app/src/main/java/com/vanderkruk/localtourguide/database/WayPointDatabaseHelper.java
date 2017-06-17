@@ -62,6 +62,7 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
 
 
                 WayPoint wapObject = new WayPoint(Double.parseDouble(Lat),Double.parseDouble(Lon), name, connectTour.getId(), wayPointOrder);
+                wapObject.setId(cursor.getInt(0));
 
                 wapObjectList.add(wapObject);
 
@@ -78,7 +79,7 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
         Log.d("WayPointDatabaseHelper", "Waypoint writing to database: " + wp);
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-
+        values.put("id", wp.getId());
         values.put("Tour_ID", wp.getTour_ID());
         values.put("Name", wp.getName());
         values.put("WaypointOrder", wp.getWaypointOrder());

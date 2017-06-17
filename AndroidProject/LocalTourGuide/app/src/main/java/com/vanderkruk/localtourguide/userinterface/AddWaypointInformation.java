@@ -18,6 +18,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import com.vanderkruk.localtourguide.R;
 import com.vanderkruk.localtourguide.datamodel.Tour;
 import com.vanderkruk.localtourguide.datamodel.WayPoint;
+import com.vanderkruk.localtourguide.datamodel.media.Text;
 
 /**
  * Created by koen on 12-6-2017.
@@ -52,8 +53,13 @@ public class AddWaypointInformation extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 WayPoint wp = new WayPoint(place.getLatLng().latitude, place.getLatLng().longitude,place.getName().toString(), currentTour.getId(), Integer.parseInt(waypointOrder.getText().toString()));
-                currentTour.addWaypoint(wp);
+
+
+                Text textItem = new Text("TESTIE", wp.getId(),currentText.getText().toString());
+                wp.addMedia(textItem);
                 Log.d("Tourie", Integer.toString(currentTour.getId()));
+
+                currentTour.addWaypoint(wp);
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
