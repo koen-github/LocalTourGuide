@@ -7,4 +7,7 @@ import com.vanderkruk.localtourguide.datamodel.media.Media;
  */
 
 public class Pictures extends Media {
+    public Pictures(String title, int wapId){
+        super(title, wapId);
+    }
 }

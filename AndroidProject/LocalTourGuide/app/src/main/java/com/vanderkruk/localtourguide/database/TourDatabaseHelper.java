@@ -41,23 +41,27 @@ public class TourDatabaseHelper extends DatabaseWriter {
     public List<Tour> getAllTours(){
         List<Tour> allTours = new ArrayList<Tour>();
 
+        try {
+            Cursor cursor = dbh.getQuery("SELECT * FROM TourInformation");
 
-        Cursor cursor = dbh.getQuery("SELECT * FROM TourInformation");
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    Tour tourObject = new Tour();
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Tour tourObject = new Tour();
+                    tourObject.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    tourObject.setName(cursor.getString(cursor.getColumnIndex("Name")));
+                    tourObject.setRating(cursor.getInt(cursor.getColumnIndex("Rating")));
+                    tourObject.setCity(cursor.getString(cursor.getColumnIndex("City")));
+                    tourObject.setUser(cursor.getString(cursor.getColumnIndex("User")));
 
-                tourObject.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                tourObject.setName(cursor.getString(cursor.getColumnIndex("Name")));
-                tourObject.setRating(cursor.getInt(cursor.getColumnIndex("Rating")));
-                tourObject.setCity(cursor.getString(cursor.getColumnIndex("City")));
-                tourObject.setUser(cursor.getString(cursor.getColumnIndex("User")));
+                    allTours.add(tourObject);
 
-                allTours.add(tourObject);
+                } while (cursor.moveToNext());
+            }
+        }
+        catch(Exception e){
 
-            } while (cursor.moveToNext());
         }
         return allTours;
 

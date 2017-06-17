@@ -51,6 +51,7 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
 
         List<WayPoint> wapObjectList = new ArrayList<WayPoint>();
 
+
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -62,8 +63,7 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
 
 
                 WayPoint wapObject = new WayPoint(Double.parseDouble(Lat),Double.parseDouble(Lon), name, connectTour.getId(), wayPointOrder);
-                wapObject.setId(cursor.getInt(0));
-
+                wapObject.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 wapObjectList.add(wapObject);
 
 
@@ -81,6 +81,9 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
         ContentValues values = new ContentValues();
         values.put("id", wp.getId());
         values.put("Tour_ID", wp.getTour_ID());
+
+
+
         values.put("Name", wp.getName());
         values.put("WaypointOrder", wp.getWaypointOrder());
         values.put("Lat", wp.getLat());

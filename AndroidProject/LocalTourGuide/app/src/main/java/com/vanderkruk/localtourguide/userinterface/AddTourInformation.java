@@ -17,10 +17,12 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.vanderkruk.localtourguide.R;
+import com.vanderkruk.localtourguide.database.MediaDatabaseHelper;
 import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
 import com.vanderkruk.localtourguide.database.WayPointDatabaseHelper;
 import com.vanderkruk.localtourguide.datamodel.Tour;
 import com.vanderkruk.localtourguide.datamodel.WayPoint;
+import com.vanderkruk.localtourguide.datamodel.media.Media;
 
 /**
  * Created by koen on 8-6-2017.
@@ -97,11 +99,17 @@ public class AddTourInformation extends AppCompatActivity{
 
         WayPointDatabaseHelper wph = new WayPointDatabaseHelper(this);
 
+        MediaDatabaseHelper mdh = new MediaDatabaseHelper(this);
+
         for(WayPoint wp: currentTour.getAllWaypoints()){
             wph.addWaypointToDatabase(wp);
+            for(Media item : wp.getAllMediaComponents()){
+                mdh.addMediaItemToDatabase(item);
+            }
         }
 
         Log.d("AddTourInformation", "Saving Tour...");
+        finish();
     }
 
 }

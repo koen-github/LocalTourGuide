@@ -7,4 +7,7 @@ import com.vanderkruk.localtourguide.datamodel.media.Media;
  */
 
 public class Audio extends Media {
+    public Audio(String title, int wapId){
+        super(title, wapId);
+    }
 }

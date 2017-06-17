@@ -7,6 +7,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -24,12 +25,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallback {
+public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private MarkerActions markerActions;
     private Tour currentTour;
+    private HashMap<Marker, WayPoint> wapointMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         currentTour = (Tour)getIntent().getSerializableExtra("currentTour");
-
+        wapointMarker = new HashMap<Marker, WayPoint>();
     }
 
 
@@ -49,15 +53,32 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
 
         for(WayPoint wap : currentTour.getAllWaypoints()){
             LatLng currentlatlng = new LatLng(wap.getLat(), wap.getLng());
-            map.addMarker(new MarkerOptions().position(currentlatlng).title(Integer.toString(wap.getWaypointOrder())));
+            MarkerOptions markerPosition = new MarkerOptions().position(currentlatlng).title(Integer.toString(wap.getWaypointOrder()));
+            Marker currentMarker = map.addMarker(markerPosition);
+
+            wapointMarker.put(currentMarker, wap);
             polyoptions.add(currentlatlng);
         }
+
         map.setMinZoomPreference(11);
         WayPoint zoomWaypoint = currentTour.getAllWaypoints().get(0);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(zoomWaypoint.getLat(), zoomWaypoint.getLng()), 10));
-        map.setOnMarkerClickListener(markerActions);
+        map.setOnMarkerClickListener(this);
         Polyline polygon = map.addPolyline(polyoptions);
 
 
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        for (Map.Entry<Marker, WayPoint> entry : wapointMarker.entrySet()) {
+            if(entry.getKey().getId().equals(marker.getId())){
+                WayPoint cu = entry.getValue();
+                Log.d("WAYPRESEED: ", cu.getAllMediaComponents().get(0).getTitle());
+
+            }
+
+        }
+        return false;
     }
 }

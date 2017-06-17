@@ -3,6 +3,7 @@ package com.vanderkruk.localtourguide.datamodel;
 import com.vanderkruk.localtourguide.datamodel.media.Media;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,12 +26,17 @@ public class WayPoint implements Serializable{
         name = nam;
         Tour_ID = tour_id;
         waypointOrder = waypoint_order;
+        mediaComponents = new ArrayList<Media>();
         Random rand = new Random();
-        int id = rand.nextInt(300000);
+        id = rand.nextInt(300000);
     }
 
     public void addMedia(Media component){
         mediaComponents.add(component);
+    }
+
+    public List<Media> getAllMediaComponents(){
+        return mediaComponents;
     }
 
     @Override

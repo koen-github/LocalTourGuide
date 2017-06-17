@@ -22,9 +22,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vanderkruk.localtourguide.R;
+import com.vanderkruk.localtourguide.database.MediaDatabaseHelper;
 import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
 import com.vanderkruk.localtourguide.database.WayPointDatabaseHelper;
 import com.vanderkruk.localtourguide.datamodel.Tour;
+import com.vanderkruk.localtourguide.datamodel.WayPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,12 +96,22 @@ public class WelcomeStartScreen extends AppCompatActivity
     public void getNewToursAndWaypoints(){
         TourDatabaseHelper tdh = new TourDatabaseHelper(this);
         List<Tour> tours = tdh.getAllTours();
-        WayPointDatabaseHelper wdh = new WayPointDatabaseHelper(this);
-
         allTours = new ArrayList<Tour>();
-        for(Tour cu : tours){
-            allTours.add(wdh.connectToursAndWaypoint(cu));
+        if(tours != null){
+            WayPointDatabaseHelper wdh = new WayPointDatabaseHelper(this);
+            MediaDatabaseHelper mdh = new MediaDatabaseHelper(this);
+
+            for(Tour cu : tours){
+                for(WayPoint wappie : cu.getAllWaypoints()){
+                    //todo get waypoint and add to database.
+                    
+                }
+                allTours.add(wdh.connectToursAndWaypoint(cu));
+            }
+
         }
+
+
 
     }
 
