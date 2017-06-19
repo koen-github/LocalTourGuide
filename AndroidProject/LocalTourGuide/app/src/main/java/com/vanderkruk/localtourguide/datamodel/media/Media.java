@@ -10,7 +10,8 @@ public abstract class Media implements Serializable{
     private int WayPointID;
     private String title;
 
-    public Media(String title, int wapID){
+    public Media(String tits, int wapID){
+        title = tits;
         WayPointID = wapID;
     }
 

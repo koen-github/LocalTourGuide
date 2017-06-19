@@ -28,7 +28,9 @@ public class AddWaypointInformation extends AppCompatActivity {
 
     private EditText waypointOrder;
     private EditText currentText;
+    private EditText currentTextTitle;
     private WayPoint currentWaypoint;
+
 
     private Tour currentTour; //todo give object from addtourinformation.
 
@@ -43,6 +45,7 @@ public class AddWaypointInformation extends AppCompatActivity {
 
         waypointOrder = (EditText) findViewById(R.id.waypointOrder);
         currentText = (EditText) findViewById(R.id.textInformation);
+        currentTextTitle = (EditText) findViewById(R.id.textMediaTitle);
         currentTour = (Tour)getIntent().getSerializableExtra("currentTour");
     }
 
@@ -55,7 +58,7 @@ public class AddWaypointInformation extends AppCompatActivity {
                 WayPoint wp = new WayPoint(place.getLatLng().latitude, place.getLatLng().longitude,place.getName().toString(), currentTour.getId(), Integer.parseInt(waypointOrder.getText().toString()));
 
 
-                Text textItem = new Text("TESTIE", wp.getId(),currentText.getText().toString());
+                Text textItem = new Text(currentTextTitle.getText().toString(), wp.getId(),currentText.getText().toString());
                 wp.addMedia(textItem);
                 Log.d("Tourie", Integer.toString(currentTour.getId()));
 

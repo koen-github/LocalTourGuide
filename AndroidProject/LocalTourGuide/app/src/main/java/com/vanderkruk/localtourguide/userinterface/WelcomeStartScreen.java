@@ -99,10 +99,7 @@ public class WelcomeStartScreen extends AppCompatActivity {
             MediaDatabaseHelper mdh = new MediaDatabaseHelper(this);
 
             for(Tour cu : tours){
-               // for(WayPoint wappie : cu.getAllWaypoints()){
-                    //todo get waypoint and add to database.
-               //     WayPoint bakkie = mdh.connectWaypointsAndMedia(wappie);
-                //}
+
                 allTours.add(wdh.connectToursAndWaypoint(cu));
             }
         }
