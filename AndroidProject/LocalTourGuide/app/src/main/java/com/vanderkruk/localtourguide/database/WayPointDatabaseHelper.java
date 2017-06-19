@@ -64,7 +64,9 @@ public class WayPointDatabaseHelper extends DatabaseWriter {
 
                 WayPoint wapObject = new WayPoint(Double.parseDouble(Lat),Double.parseDouble(Lon), name, connectTour.getId(), wayPointOrder);
                 wapObject.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                wapObjectList.add(wapObject);
+                MediaDatabaseHelper mdh = new MediaDatabaseHelper(currentContext);
+                WayPoint newWap = mdh.connectWaypointsAndMedia(wapObject);
+                wapObjectList.add(newWap);
 
 
             } while (cursor.moveToNext());

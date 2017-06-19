@@ -31,8 +31,7 @@ import com.vanderkruk.localtourguide.datamodel.WayPoint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WelcomeStartScreen extends AppCompatActivity
-        {
+public class WelcomeStartScreen extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private List<Tour> allTours;
@@ -53,8 +52,6 @@ public class WelcomeStartScreen extends AppCompatActivity
                 Log.d("TOUR", "WAS EMPTY!!!");
             }
         }
-
-
     };
 
 
@@ -102,17 +99,13 @@ public class WelcomeStartScreen extends AppCompatActivity
             MediaDatabaseHelper mdh = new MediaDatabaseHelper(this);
 
             for(Tour cu : tours){
-                for(WayPoint wappie : cu.getAllWaypoints()){
+               // for(WayPoint wappie : cu.getAllWaypoints()){
                     //todo get waypoint and add to database.
-                    
-                }
+               //     WayPoint bakkie = mdh.connectWaypointsAndMedia(wappie);
+                //}
                 allTours.add(wdh.connectToursAndWaypoint(cu));
             }
-
         }
-
-
-
     }
 
 

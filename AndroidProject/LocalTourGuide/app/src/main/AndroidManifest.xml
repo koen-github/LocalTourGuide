@@ -46,6 +46,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".userinterface.AddWaypointInformation" />
+        <activity android:name=".userinterface.ShowMediaItem" />
     </application>
 
 </manifest>

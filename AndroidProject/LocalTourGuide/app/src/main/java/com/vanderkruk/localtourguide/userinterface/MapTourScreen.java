@@ -18,7 +18,9 @@ import com.vanderkruk.localtourguide.database.TourDatabaseHelper;
 import com.vanderkruk.localtourguide.database.WayPointDatabaseHelper;
 import com.vanderkruk.localtourguide.datamodel.Tour;
 import com.vanderkruk.localtourguide.datamodel.WayPoint;
+import com.vanderkruk.localtourguide.datamodel.media.Text;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -65,8 +67,6 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(zoomWaypoint.getLat(), zoomWaypoint.getLng()), 10));
         map.setOnMarkerClickListener(this);
         Polyline polygon = map.addPolyline(polyoptions);
-
-
     }
 
     @Override
@@ -74,7 +74,13 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
         for (Map.Entry<Marker, WayPoint> entry : wapointMarker.entrySet()) {
             if(entry.getKey().getId().equals(marker.getId())){
                 WayPoint cu = entry.getValue();
-                Log.d("WAYPRESEED: ", cu.getAllMediaComponents().get(0).getTitle());
+                Text ct =  (Text)cu.getAllMediaComponents().get(0) ;
+
+                Intent intent = new Intent(MapTourScreen.this, ShowMediaItem.class);
+                intent.putExtra("currentText",ct);
+
+                startActivity(intent);
+                Log.d("WAYPRESEED: ",ct.getText());
 
             }
 
