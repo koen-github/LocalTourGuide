@@ -57,12 +57,15 @@ public class MapTourScreen extends AppCompatActivity implements OnMapReadyCallba
             LatLng currentlatlng = new LatLng(wap.getLat(), wap.getLng());
             MarkerOptions markerPosition = new MarkerOptions().position(currentlatlng).title(Integer.toString(wap.getWaypointOrder()));
             Marker currentMarker = map.addMarker(markerPosition);
-
+            if(wap.getWaypointOrder() == 1){
+                currentMarker.showInfoWindow();
+            }
             wapointMarker.put(currentMarker, wap);
             polyoptions.add(currentlatlng);
         }
 
         map.setMinZoomPreference(11);
+
         WayPoint zoomWaypoint = currentTour.getAllWaypoints().get(0);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(zoomWaypoint.getLat(), zoomWaypoint.getLng()), 10));
         map.setOnMarkerClickListener(this);
